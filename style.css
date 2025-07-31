@@ -37,3 +37,7 @@ h1 {
 .card p {
   margin: 0.25rem 0;
 }
+label {
+  float: right;
+  font-size: 0.9rem;
+}

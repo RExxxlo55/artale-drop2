@@ -8,7 +8,7 @@ fetch('artale_event_data.json')
       card.className = `card ${item.重要性.includes("高") ? "high" : "low"}`;
 
       card.innerHTML = `
-        <label style="float:right;">
+        <label>
           <input type="checkbox" id="check-${index}" /> 完成
         </label>
         <h3>${item["活動/任務名稱"]} (${item.頻率})</h3>
