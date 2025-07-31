@@ -1,32 +1,19 @@
-fetch("artale_event_data.json")
-  .then((res) => res.json())
-  .then((data) => {
-    const tbody = document.querySelector("#event-table tbody");
+fetch('artale_event_data.json')
+  .then(response => response.json())
+  .then(data => {
+    const container = document.getElementById('event-container');
 
-    data.forEach((item, index) => {
-      const row = document.createElement("tr");
+    data.forEach(item => {
+      const card = document.createElement('div');
+      card.className = `card ${item.重要性.includes("高") ? "high" : "low"}`;
 
-      // 判斷是否已完成（從 localStorage）
-      const isChecked = localStorage.getItem("event_done_" + index) === "true";
-
-      row.innerHTML = `
-        <td>${item["重要性"] || ""}</td>
-        <td>${item["活動/任務名稱"] || ""}</td>
-        <td>${item["任務內容"] || ""}</td>
-        <td>${item["頻率"] || ""}</td>
-        <td>${item["NPC/位置"] || ""}</td>
-        <td>${item["備註"] || ""}</td>
-        <td><input type="checkbox" data-index="${index}" ${isChecked ? "checked" : ""}></td>
+      card.innerHTML = `
+        <h3>${item["活動/任務名稱"]} (${item.頻率})</h3>
+        <p><strong>任務內容：</strong>${item["任務內容"]}</p>
+        <p><strong>NPC/位置：</strong>${item["NPC/位置"] || "-"}</p>
+        <p><strong>備註：</strong>${item["備註"] || "-"}</p>
       `;
 
-      tbody.appendChild(row);
-    });
-
-    // 綁定事件
-    tbody.querySelectorAll("input[type='checkbox']").forEach((checkbox) => {
-      checkbox.addEventListener("change", (e) => {
-        const index = e.target.getAttribute("data-index");
-        localStorage.setItem("event_done_" + index, e.target.checked);
-      });
+      container.appendChild(card);
     });
   });
